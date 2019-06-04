@@ -1,0 +1,10 @@
+png(filename = "plot2.png", width = 480, height = 480)
+power <- read.table("household_power_consumption.txt", header = TRUE, sep = ";", na.strings = "?")
+power_1_2_feb <- subset(power, Date == "1/2/2007" | Date == "2/2/2007")
+power_1_2_feb$period <- paste(power_1_2_feb$Date, power_1_2_feb$Time)
+curr <- strptime(power_1_2_feb$period, format = "%d/%m/%Y %H:%M:%S")
+final_power<-cbind(power_1_2_feb, curr)
+plot(as.numeric(final_power$curr), as.numeric(final_power$Global_active_power), type = "l", ylab = "Global Active Power(kilowatts)", xlab = " ", main = " ", xaxt = "n")
+axis(side=1,at= c(unclass(as.POSIXct("2007-02-01 0:00:00")),unclass(as.POSIXct("2007-02-02 0:00:00")),unclass(as.POSIXct("2007-02-03 0:00:00"))), labels = c("Thu", "Fri", "Sat"))
+dev.off()
+   
